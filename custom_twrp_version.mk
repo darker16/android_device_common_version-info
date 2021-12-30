@@ -5,7 +5,7 @@
 ifeq ($(CUSTOM_TWRP_BUILD_NUMBER_FILE),)
 # ${CURDIR}									full path to TOP
 # $(dir $(lastword $(MAKEFILE_LIST)))		relative path to this file
-CUSTOM_TWRP_BUILD_NUMBER_FILE := "$(dir $(lastword $(MAKEFILE_LIST)))CUSTOM_TWRP_BUILD_NUMBER-$(TARGET_DEVICE).TXT"
+CUSTOM_TWRP_BUILD_NUMBER_FILE := "$(dir $(lastword $(MAKEFILE_LIST)))CUSTOM_TWRP_BUILD_NUMBER-$(TARGET_DEVICE).txt"
 endif
 
 ifeq ($(CUSTOM_TWRP_VERSION_PREFIX),)
@@ -53,7 +53,7 @@ cmd_post_run += $(cmd_put_out)
 cmd_ren_rec_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
 cmd_ren_rec_img += mv -v
 cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/recovery.img"
-cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/twrp_$(cmd_get_TWRP_ver)_$(CUSTOM_TWRP_VERSION_PREFIX)_`cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE)`-$(TARGET_DEVICE).img"
+cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/twrp_$(cmd_get_TWRP_ver)_$(CUSTOM_TWRP_VERSION_PREFIX)-`cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE)`-$(TARGET_DEVICE).img"
 cmd_ren_rec_img +=  1>&2;
 
 
