@@ -29,7 +29,7 @@ cmd_get_out      := build_str=`cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE)`; build_date
 cmd_reset_ver    := echo -ne "\nCUSTOM_TWRP_VERSION.mk: New date, reset build number to 01\n\n" 1>&2; build_date=`date -u +%Y%m%d`; build_num=1;
 cmd_incr_num     := build_num=$$(( 10\#$$build_num + 1 )); if [ $$build_num -gt 99 ]; then echo -ne "\nCUSTOM_TWRP_VERSION.mk: ERROR: Build number will exceed 99 resetting to 01\n\n" 1>&2; build_num=1; fi;
 cmd_is_new_date  := `date -u +%Y%m%d` -gt $$build_date
-cmd_get_TWRP_ver := `grep -azA1 ro.twrp.version $(ANDROID_PRODUCT_OUT)/recovery/root/sbin/recovery | grep -avz ro.twrp.version | head -c -1`
+cmd_get_TWRP_ver := `grep -azA1 ro.twrp.version $(OUT_DIR)/target/product/$(TARGET_DEVICE)/recovery/root/sbin/recovery | grep -avz ro.twrp.version | head -c -1`
 
 
 #run on envsetup and/or any make
@@ -58,15 +58,15 @@ cmd_post_run += $(cmd_put_out)
 #rename recoveryimage command
 cmd_ren_rec_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
 cmd_ren_rec_img += mv -v
-cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/recovery.img"
-cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
+cmd_ren_rec_img +=  "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/recovery.img"
+cmd_ren_rec_img +=  "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
 cmd_ren_rec_img +=  1>&2;
 
 #rename bootimage command
 cmd_ren_boot_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
 cmd_ren_boot_img += mv -v
-cmd_ren_boot_img +=  "$(ANDROID_PRODUCT_OUT)/boot.img"
-cmd_ren_boot_img +=  "$(ANDROID_PRODUCT_OUT)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
+cmd_ren_boot_img +=  "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/boot.img"
+cmd_ren_boot_img +=  "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
 cmd_ren_boot_img +=  1>&2;
 
 
