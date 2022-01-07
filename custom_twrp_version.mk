@@ -46,7 +46,7 @@ cmd_pre_run  += 	fi;
 cmd_pre_run  += fi;
 
 
-#run after: make recoveryimage
+#run after: make (boot)recoveryimage
 cmd_post_run := $(cmd_get_out)
 cmd_post_run += if [ $(cmd_is_new_date) ]; then
 cmd_post_run += 	$(cmd_reset_ver)
@@ -55,13 +55,19 @@ cmd_post_run += 	$(cmd_incr_num)
 cmd_post_run += fi;
 cmd_post_run += $(cmd_put_out)
 
-#rename command
+#rename recoveryimage command
 cmd_ren_rec_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
 cmd_ren_rec_img += mv -v
 cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/recovery.img"
 cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
 cmd_ren_rec_img +=  1>&2;
 
+#rename bootimage command
+cmd_ren_boot_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
+cmd_ren_boot_img += mv -v
+cmd_ren_boot_img +=  "$(ANDROID_PRODUCT_OUT)/boot.img"
+cmd_ren_boot_img +=  "$(ANDROID_PRODUCT_OUT)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
+cmd_ren_boot_img +=  1>&2;
 
 
 #if the build number file doesnt exist create it as 01, if it does then check date
@@ -73,10 +79,14 @@ TW_DEVICE_VERSION := $(CUSTOM_TWRP_DEVICE_VERSION)_$(CUSTOM_TWRP_VERSION_PREFIX)
 $(shell echo "CUSTOM_TWRP_VERSION.mk: TWRP Recovery build number=$(CUSTOM_TWRP_VERSION)" 1>&2)
 
 
-#once the recoveryimage is built, rename the output file, and increase the build number for the next run
+#once the image is built, rename the output file, and increase the build number for the next run
+bootimage:
+	$(shell $(cmd_ren_boot_img))
+	$(shell $(cmd_post_run))
+	$(shell echo "CUSTOM_TWRP_VERSION.mk: Increase TWRP Recovery build number to `cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE)` for next build" 1>&2)
+
 recoveryimage:
 	$(shell $(cmd_ren_rec_img))
 	$(shell $(cmd_post_run))
 	$(shell echo "CUSTOM_TWRP_VERSION.mk: Increase TWRP Recovery build number to `cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE)` for next build" 1>&2)
 
-CUSTOM_TWRP_VERSION := $(shell cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE))
