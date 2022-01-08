@@ -24,5 +24,5 @@ CUSTOM_TWRP_VERSION := $(shell date +%Y%m%d)-01
 endif
 ```
 
-NOTE; The version number in TWRP will be the same as the renamed file.
+NOTE: The version number in TWRP will be the same as the renamed file.
 
