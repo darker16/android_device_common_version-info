@@ -28,7 +28,7 @@ cmd_put_out      := printf "%s-%02d" $$build_date $$build_num >$(CUSTOM_TWRP_BUI
 cmd_get_out      := build_str=`cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE)`; build_date=$${build_str:0:8}; build_num=$${build_str:9:2};
 cmd_reset_ver    := echo -ne "\nCUSTOM_TWRP_VERSION.mk: New date, reset build number to 01\n\n" 1>&2; build_date=`date -u +%Y%m%d`; build_num=1;
 cmd_incr_num     := build_num=$$(( 10\#$$build_num + 1 )); if [ $$build_num -gt 99 ]; then echo -ne "\nCUSTOM_TWRP_VERSION.mk: ERROR: Build number will exceed 99 resetting to 01\n\n" 1>&2; build_num=1; fi;
-cmd_is_new_date  := `date -u +%Y%m%d` -gt $$build_date
+cmd_is_new_date  := `date +%Y%m%d` -gt $$build_date
 cmd_get_TWRP_ver := `grep -azA1 ro.twrp.version $(ANDROID_PRODUCT_OUT)/recovery/root/sbin/recovery | grep -avz ro.twrp.version | head -c -1`
 
 
