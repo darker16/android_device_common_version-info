@@ -56,18 +56,31 @@ cmd_post_run += fi;
 cmd_post_run += $(cmd_put_out)
 
 #rename recoveryimage command
-cmd_ren_rec_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
+cmd_ren_rec_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Renaming output file(s)...\n" 1>&2;
 cmd_ren_rec_img += mv -v
 cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/recovery.img"
 cmd_ren_rec_img +=  "$(ANDROID_PRODUCT_OUT)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
 cmd_ren_rec_img +=  1>&2;
+cmd_ren_rec_img += if [ -f $(OUT_DIR)/target/product/$(TARGET_DEVICE)/recovery-installer.zip ]; then
+cmd_ren_rec_img +=     mv -v
+cmd_ren_rec_img +=      "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/recovery-installer.zip"
+cmd_ren_rec_img +=      "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/twrp-installer-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).zip"
+cmd_ren_rec_img +=      1>&2;
+cmd_ren_rec_img += fi;
+
 
 #rename bootimage command
-cmd_ren_boot_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Rename output file " 1>&2;
+cmd_ren_boot_img := echo -ne "\n\nCUSTOM_TWRP_VERSION.mk: Renaming output file(s)...\n" 1>&2;
 cmd_ren_boot_img += mv -v
 cmd_ren_boot_img +=  "$(ANDROID_PRODUCT_OUT)/boot.img"
 cmd_ren_boot_img +=  "$(ANDROID_PRODUCT_OUT)/twrp-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).img"
 cmd_ren_boot_img +=  1>&2;
+cmd_ren_boot_img += if [ -f $(OUT_DIR)/target/product/$(TARGET_DEVICE)/recovery-installer.zip ]; then
+cmd_ren_boot_img +=     mv -v
+cmd_ren_boot_img +=      "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/recovery-installer.zip"
+cmd_ren_boot_img +=      "$(OUT_DIR)/target/product/$(TARGET_DEVICE)/twrp-installer-$(cmd_get_TWRP_ver)-$(TW_DEVICE_VERSION)$(TARGET_DEVICE).zip"
+cmd_ren_boot_img +=      1>&2;
+cmd_ren_boot_img += fi;
 
 
 #if the build number file doesnt exist create it as 01, if it does then check date
