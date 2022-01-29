@@ -89,7 +89,7 @@ cmd_ren_boot_img += fi;
 #if the build number file doesnt exist create it as 01, if it does then check date
 $(shell $(cmd_pre_run))
 
-TW_MAIN_VERSION := $(shell echo "`sed -n -e 's/^.*#define TW_MAIN_VERSION_STR //p' bootable/recovery/variables.h | cut -d'"' -f 2`")
+TW_MAIN_VERSION := $(shell sed -n -e 's/^.*#define TW_MAIN_VERSION_STR //p' bootable/recovery/variables.h | cut -d'"' -f 2)
 CUSTOM_TWRP_VERSION := $(shell cat $(CUSTOM_TWRP_BUILD_NUMBER_FILE))
 TW_DEVICE_VERSION := $(CUSTOM_TWRP_DEVICE_VERSION)_$(CUSTOM_TWRP_VERSION_PREFIX)-$(CUSTOM_TWRP_VERSION)
 
