@@ -2,7 +2,7 @@
 
 # Features
 * Auto increment twrp patch number
-* Rename twrp boot/recovery.img to twrp_A.B.C_11-$(CUSTOM_TWRP_DEVICE_VERSION)_$(CUSTOM_TWRP_VERSION_PREFIX)-YYYYMMDD-pp-$(TARGET_DEVICE).img
+* Rename twrp boot/recovery.img to twrp_A.B.C_12-$(CUSTOM_TWRP_DEVICE_VERSION)_$(CUSTOM_TWRP_VERSION_PREFIX)-YYYYMMDD-pp-$(TARGET_DEVICE).img
 
 ## How to use
 Sync repo to device/common/version-info.
